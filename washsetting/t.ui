@@ -6,256 +6,26 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>735</width>
-    <height>610</height>
+    <width>807</width>
+    <height>483</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>配置工具</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="read_setting_pushButton">
+   <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>530</y>
-      <width>71</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>读取设置</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="write_setting_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>620</x>
-      <y>530</y>
-      <width>71</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>保存设置</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="init_pushButton">
-    <property name="geometry">
-     <rect>
-      <x>380</x>
-      <y>530</y>
-      <width>91</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>数据库初始化</string>
-    </property>
-   </widget>
-   <widget class="QTextBrowser" name="textBrowser">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>290</y>
-      <width>291</width>
-      <height>181</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QGroupBox" name="groupBox_2">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
+      <x>20</x>
       <y>10</y>
-      <width>331</width>
+      <width>291</width>
       <height>211</height>
      </rect>
     </property>
     <property name="title">
-     <string>设备状态</string>
+     <string>系统参数</string>
     </property>
-    <property name="alignment">
-     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-    </property>
-    <widget class="QWidget" name="layoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>30</y>
-       <width>291</width>
-       <height>161</height>
-      </rect>
-     </property>
-     <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <widget class="QLabel" name="Door">
-        <property name="text">
-         <string>入口卷闸门</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="QCheckBox" name="doorin_yes_checkBox">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="text">
-         <string>有</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="2">
-       <widget class="QLabel" name="wepay_5">
-        <property name="text">
-         <string>摄像头ZS</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="3">
-       <widget class="QCheckBox" name="camerazs_yes_checkBox">
-        <property name="text">
-         <string>有</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="Door_2">
-        <property name="text">
-         <string>出口卷闸门</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="1">
-       <widget class="QCheckBox" name="doorout_yes_checkBox">
-        <property name="text">
-         <string>有</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="2">
-       <widget class="QLabel" name="Door_4">
-        <property name="text">
-         <string>CameraLED</string>
-        </property>
-       </widget>
-      </item>
-      <item row="1" column="3">
-       <widget class="QCheckBox" name="cameraled_yes_checkBox">
-        <property name="text">
-         <string>有</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="0">
-       <widget class="QLabel" name="in_label">
-        <property name="text">
-         <string>进口闸机</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="1">
-       <widget class="QCheckBox" name="gatein_yes_checkBox">
-        <property name="text">
-         <string>有</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="2">
-       <widget class="QLabel" name="digan">
-        <property name="text">
-         <string>地感</string>
-        </property>
-       </widget>
-      </item>
-      <item row="2" column="3">
-       <widget class="QCheckBox" name="groundsense_yes_checkBox">
-        <property name="text">
-         <string>有</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="0">
-       <widget class="QLabel" name="out">
-        <property name="text">
-         <string>出口闸机</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QCheckBox" name="gateout_yes_checkBox">
-        <property name="text">
-         <string>有</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="2">
-       <widget class="QLabel" name="wepay">
-        <property name="text">
-         <string>微信扫码</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="3">
-       <widget class="QCheckBox" name="wpc_yes_checkBox">
-        <property name="text">
-         <string>有</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="0">
-       <widget class="QLabel" name="Door_3">
-        <property name="text">
-         <string>DoorLED</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="1">
-       <widget class="QCheckBox" name="doorled_yes_checkBox">
-        <property name="text">
-         <string>有</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="2">
-       <widget class="QLabel" name="wepay_3">
-        <property name="text">
-         <string>洗车机</string>
-        </property>
-       </widget>
-      </item>
-      <item row="4" column="3">
-       <widget class="QCheckBox" name="washing_yes_checkBox">
-        <property name="text">
-         <string>有</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </widget>
-   <widget class="QGroupBox" name="groupBox">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>291</width>
-      <height>271</height>
-     </rect>
-    </property>
-    <property name="title">
-     <string>洗车机配置</string>
-    </property>
-    <widget class="QLineEdit" name="washingport_lineEdit">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>230</y>
-       <width>113</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QLineEdit" name="wash_mode_lineEdit">
      <property name="geometry">
       <rect>
@@ -285,22 +55,12 @@
       <number>0</number>
      </property>
     </widget>
-    <widget class="QLineEdit" name="washingIP_lineEdit">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>200</y>
-       <width>113</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
     <widget class="QLineEdit" name="city_lineEdit">
      <property name="geometry">
       <rect>
        <x>90</x>
        <y>50</y>
-       <width>113</width>
+       <width>61</width>
        <height>20</height>
       </rect>
      </property>
@@ -341,38 +101,12 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLabel" name="wepay_4">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>230</y>
-       <width>71</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>洗车机端口号</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="wepay_2">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>200</y>
-       <width>71</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>洗车机IP</string>
-     </property>
-    </widget>
     <widget class="QLineEdit" name="province_lineEdit">
      <property name="geometry">
       <rect>
        <x>90</x>
        <y>20</y>
-       <width>113</width>
+       <width>61</width>
        <height>20</height>
       </rect>
      </property>
@@ -395,16 +129,6 @@
       <rect>
        <x>90</x>
        <y>170</y>
-       <width>113</width>
-       <height>20</height>
-      </rect>
-     </property>
-    </widget>
-    <widget class="QLineEdit" name="wash_type_lineEdit">
-     <property name="geometry">
-      <rect>
-       <x>90</x>
-       <y>80</y>
        <width>113</width>
        <height>20</height>
       </rect>
@@ -436,6 +160,606 @@
       <string>SSH端口号</string>
      </property>
     </widget>
+    <widget class="QLineEdit" name="wash_type_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>80</y>
+       <width>113</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QGroupBox" name="groupBox_2">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>10</y>
+      <width>401</width>
+      <height>331</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>设备参数</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+    </property>
+    <widget class="QLineEdit" name="camerazs_port_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>186</y>
+       <width>61</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="in_label">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>108</y>
+       <width>48</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>进口闸机</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="wepay_3">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>290</y>
+       <width>36</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>洗车机</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="out">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>134</y>
+       <width>48</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>出口闸机</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="wepay">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>264</y>
+       <width>48</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>微信扫码</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>330</x>
+       <y>21</y>
+       <width>24</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>端口</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="doorled_checkBox">
+     <property name="geometry">
+      <rect>
+       <x>98</x>
+       <y>162</y>
+       <width>35</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>有</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="washing_port_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>290</y>
+       <width>61</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="gateout_ip_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>152</x>
+       <y>134</y>
+       <width>133</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="doorled_port_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>160</y>
+       <width>61</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="cameraled_port_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>212</y>
+       <width>61</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="gs_port_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>238</y>
+       <width>61</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="washing_ip_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>152</x>
+       <y>290</y>
+       <width>133</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="washing_checkBox">
+     <property name="geometry">
+      <rect>
+       <x>98</x>
+       <y>292</y>
+       <width>35</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>有</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="doorout_checkBox">
+     <property name="geometry">
+      <rect>
+       <x>98</x>
+       <y>84</y>
+       <width>35</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>有</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>190</x>
+       <y>21</y>
+       <width>36</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>IP地址</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Door_3">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>160</y>
+       <width>42</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>DoorLED</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="cameraled_checkBox">
+     <property name="geometry">
+      <rect>
+       <x>98</x>
+       <y>214</y>
+       <width>35</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>有</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Door_4">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>212</y>
+       <width>54</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>CameraLED</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="wpc_checkBox">
+     <property name="geometry">
+      <rect>
+       <x>98</x>
+       <y>266</y>
+       <width>35</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>有</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="doorled_ip_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>152</x>
+       <y>160</y>
+       <width>133</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="gateout_port_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>134</y>
+       <width>61</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="camerazs_checkBox">
+     <property name="geometry">
+      <rect>
+       <x>98</x>
+       <y>188</y>
+       <width>35</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>有</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="digan">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>238</y>
+       <width>24</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>地感</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="wepay_5">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>186</y>
+       <width>48</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>摄像头ZS</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="doorin_checkBox">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>98</x>
+       <y>58</y>
+       <width>35</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>有</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>21</y>
+       <width>48</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>是否有效</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="gatein_port_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>108</y>
+       <width>61</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>21</y>
+       <width>48</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>设备名称</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="gatein_ip_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>152</x>
+       <y>108</y>
+       <width>133</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="gs_checkBox">
+     <property name="geometry">
+      <rect>
+       <x>98</x>
+       <y>240</y>
+       <width>35</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>有</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="wpc_ip_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>152</x>
+       <y>264</y>
+       <width>133</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Door_2">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>82</y>
+       <width>60</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>出口卷闸门</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="doorout_ip_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>152</x>
+       <y>82</y>
+       <width>133</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="cameraled_ip_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>152</x>
+       <y>212</y>
+       <width>133</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="doorin_ip_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>152</x>
+       <y>56</y>
+       <width>133</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="camerazs_ip_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>152</x>
+       <y>186</y>
+       <width>133</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="doorin_port_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>56</y>
+       <width>61</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="gateout_checkBox">
+     <property name="geometry">
+      <rect>
+       <x>98</x>
+       <y>136</y>
+       <width>35</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>有</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="gs_ip_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>152</x>
+       <y>238</y>
+       <width>133</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="doorout_port_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>82</y>
+       <width>61</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="Door">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>56</y>
+       <width>60</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>入口卷闸门</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="wpc_port_lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>320</x>
+       <y>264</y>
+       <width>61</width>
+       <height>20</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="gatein_checkBox">
+     <property name="geometry">
+      <rect>
+       <x>98</x>
+       <y>110</y>
+       <width>35</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>有</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowser">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>240</y>
+      <width>291</width>
+      <height>181</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="msg_label">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>340</y>
+      <width>289</width>
+      <height>38</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>提示信息</string>
+    </property>
+    <property name="scaledContents">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QWidget" name="">
+    <property name="geometry">
+     <rect>
+      <x>390</x>
+      <y>390</y>
+      <width>291</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QPushButton" name="init_pushButton">
+       <property name="text">
+        <string>数据库初始化</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="read_setting_pushButton">
+       <property name="text">
+        <string>读取设置</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="write_setting_pushButton">
+       <property name="text">
+        <string>保存设置</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -443,7 +767,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>735</width>
+     <width>807</width>
      <height>23</height>
     </rect>
    </property>
