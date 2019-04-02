@@ -42,7 +42,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         镀膜清洗： %01#WCCR0141014201000000**
         ''')
         self.PC_lineEdit.setText('192.168.10.100')
-    
+        self.setWindowTitle("配置工具  软件版本：v1.0")
+
         
         self.read_setting_pushButton.clicked.connect(self.on_read_setting_pushButton_clicked)
         self.write_setting_pushButton.clicked.connect(self.on_write_setting_pushButton_clicked)
