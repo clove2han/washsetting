@@ -10,10 +10,9 @@ from PyQt5.QtWidgets import QMainWindow, QApplication
 
 from t_widget import Ui_MainWindow
 import MySQLdb
-from pkgutil import get_data
+import re 
 
-
-HOST = '192.168.10.100'
+HOST = '192.168.10.1001'
 DATABASE_USER = 'mallwash'
 DATABASE_PASSWORD='Mallwash.1234'
 DATABASE_DB = 'mallwash_agent'
@@ -31,12 +30,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         """
         super(MainWindow, self).__init__(parent)
         self.setupUi(self)
-        
-        self.read_setting_pushButton.clicked.connect(self.on_read_setting_pushButton_clicked)
-        self.write_setting_pushButton.clicked.connect(self.on_write_setting_pushButton_clicked)
-        self.init_pushButton.clicked.connect(self.initdb)
-        
-        
         self.textBrowser.append('''
         洗车机型：
         竹美： ZhuMeiX
@@ -48,54 +41,88 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         泡沫清洗： %01#WCCR0141014201200000**
         镀膜清洗： %01#WCCR0141014201000000**
         ''')
+        self.PC_lineEdit.setText('192.168.10.100')
+    
+        
+        self.read_setting_pushButton.clicked.connect(self.on_read_setting_pushButton_clicked)
+        self.write_setting_pushButton.clicked.connect(self.on_write_setting_pushButton_clicked)
+        self.init_pushButton.clicked.connect(self.initdb)
+
+    def check_ip(self,ipAddr):
+
+        compile_ip=re.compile('^(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|[1-9])\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)\.(1\d{2}|2[0-4]\d|25[0-5]|[1-9]\d|\d)$')
+        if compile_ip.match(ipAddr):
+            return True 
+        else:  
+            return False
+
     # 打开数据库连接   
     def connect_database(self):
-        db = MySQLdb.connect(HOST,DATABASE_USER,DATABASE_PASSWORD,DATABASE_DB,charset='utf8')
-        print('database connected')
-        return db
-    
+        HOST = self.PC_lineEdit.text()
+        if self.check_ip(HOST):
+            try:
+                db = MySQLdb.connect(HOST,DATABASE_USER,DATABASE_PASSWORD,DATABASE_DB,charset='utf8')
+                if db != None:
+                    self.msg_label.setText('提示信息：主机连接成功')
+                    return db
+                else:
+                    self.msg_label.setText('提示信息：主机连接失败')
+            except:
+                print('提示信息：主机IP地址错误')
+                self.msg_label.setText('提示信息：主机IP地址错误')
+                return None
+#             
+        else:
+            self.msg_label.setText('提示信息：主机IP地址错误')
+        
     def initdb(self):
         con = self.connect_database()
-        cur = con.cursor()
-#         sql = "select id from wc_equipment;"
-#         res = self.get_data(sql)
-#         for re in res:
-#             if re[0] =='682':
-#                 self.msg_label.setText("数据库已初始化！")
-#             else:
-        try:
-            # 执行SQL语句
-            cur.execute("insert into wc_equipment (id,code,status,site_id,site_code,eq_type,ip,port) values('682','gateOut',0,'dgBJCH','dgBJCH',2,'192.168.10.18',20108);")
-            # 查询到站点编码 
-            con.commit()
-            self.msg_label.setText("提示信息：数据库初始化成功")
-        except:
-            print("Error: initdb failed")
-            self.msg_label.setText("提示信息：数据库已初始化")
+        if con != None:
+            cur = con.cursor()
+            try:
+                # 执行SQL语句
+                cur.execute("insert into wc_equipment (id,code,status,site_id,site_code,eq_type,ip,port) values('682','gateOut',0,'dgBJCH','dgBJCH',2,'192.168.10.18',20108);")
+                # 查询到站点编码 
+                con.commit()
+                self.msg_label.setText("提示信息：数据库初始化成功")
+            except:
+                print("Error: initdb failed,字段已存在")
+                self.msg_label.setText("提示信息：数据库已初始化")
+        else:
+            self.msg_label.setText("提示信息：数据库连接失败")
     
     def get_data(self,sql):
         con = self.connect_database()
-        cursor = con.cursor()
-        try:
-            # 执行SQL语句
-            cursor.execute(sql)
-            # 查询到站点编码 
-            results = cursor.fetchall()
-            return results
-        except:
-            print("Error: get data failed")
+        if con != None:
+            cur = con.cursor()
+            try:
+                # 执行SQL语句
+                cur.execute(sql)
+                # 查询到站点编码 
+                results = cur.fetchall()
+                return results
+            except:
+                print("Error: get data failed")
+                return None
+        else:
+            
+            self.msg_label.setText("提示信息：数据库连接失败")
+            return None
         
     
     def set_data(self,sql):
         con = self.connect_database()
-        cur = con.cursor()
-        try:
-            # 执行SQL语句
-            cur.execute(sql)
-            # 查询到站点编码 
-            con.commit()
-        except:
-            print("Error: set data failed")
+        if con != None:
+            cur = con.cursor()
+            try:
+                # 执行SQL语句
+                cur.execute(sql)
+                # 查询到站点编码 
+                con.commit()
+            except:
+                    print("Error: set data failed")
+        else:
+            self.msg_label.setText("提示信息：数据库连接失败")
 
     # 关闭数据库连接
     def close_database(self,db):
@@ -131,113 +158,106 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def on_read_setting_pushButton_clicked(self):
         wc_param = self.get_wc_param()
         #给文本框赋值
-        self.province_lineEdit.setText(wc_param[0][1])
-        self.city_lineEdit.setText(wc_param[1][1])
-        self.site_id_lineEdit.setText(wc_param[2][1])
-        self.wash_type_lineEdit.setText(wc_param[3][1])
-        self.wash_mode_lineEdit.setText(wc_param[4][1])     
-        
+        print(wc_param)
+        print(wc_param[4][1][0:26])
+        print(len(wc_param[4][1][0:26]))
+        if wc_param != None:
+            self.province_lineEdit.setText(wc_param[0][1])
+            self.city_lineEdit.setText(wc_param[1][1])
+            self.site_id_lineEdit.setText(wc_param[2][1])
+            self.wash_type_lineEdit.setText(wc_param[3][1])
+            self.wash_mode_lineEdit.clear()
+            self.wash_mode_lineEdit.setText(wc_param[4][1][0:26])     
         wc_equipment = self.get_equipment()
-        self.ssh_port_lineEdit.setText(wc_equipment[0][2]) 
-        
-        for i in range(10):
-            #闸门LED
-            if wc_equipment[i][0] == '122':
-                #是否有效
-                print(wc_equipment[i][1])
-                if wc_equipment[i][1] == 0:
-                    self.doorled_checkBox.setChecked(True)
-                elif wc_equipment[i][1] == 1:
-                    self.doorled_checkBox.setChecked(False)
-                self.doorled_ip_lineEdit.setText(wc_equipment[i][4])   
-                self.doorled_port_lineEdit.setText(str(wc_equipment[i][5]))
-            elif wc_equipment[i][0] == '123':
-                #是否有效
-                print(wc_equipment[i][1])
-                if wc_equipment[i][1] == 0:
-                    self.washing_checkBox.setChecked(True)
-                elif wc_equipment[i][1] == 1:
-                    self.washing_checkBox.setChecked(False)
-                self.washing_ip_lineEdit.setText(wc_equipment[i][4])   
-                self.washing_port_lineEdit.setText(str(wc_equipment[i][5]))
-            elif wc_equipment[i][0] == '234':
-                #是否有效
-                print(wc_equipment[i][1])
-                if wc_equipment[i][1] == 0:
-                    self.gatein_checkBox.setChecked(True)
-                elif wc_equipment[i][1] == 1:
-                    self.gatein_checkBox.setChecked(False)
-                self.gatein_ip_lineEdit.setText(wc_equipment[i][4])   
-                self.gatein_port_lineEdit.setText(str(wc_equipment[i][5]))
-            elif wc_equipment[i][0] == '345':
-                #是否有效
-                print(wc_equipment[i][1])
-                if wc_equipment[i][1] == 0:
-                    self.camerazs_checkBox.setChecked(True)
-                elif wc_equipment[i][1] == 1:
-                    self.camerazs_checkBox.setChecked(False)
-                self.camerazs_ip_lineEdit.setText(wc_equipment[i][4])   
-                self.camerazs_port_lineEdit.setText(str(wc_equipment[i][5]))
-            elif wc_equipment[i][0] == '456':
-                #是否有效
-                print(wc_equipment[i][1])
-                if wc_equipment[i][1] == 0:
-                    self.cameraled_checkBox.setChecked(True)
-                elif wc_equipment[i][1] == 1:
-                    self.cameraled_checkBox.setChecked(False)
-                self.cameraled_ip_lineEdit.setText(wc_equipment[i][4])   
-                self.cameraled_port_lineEdit.setText(str(wc_equipment[i][5]))
-                
-            elif wc_equipment[i][0] == '678':
-                #是否有效
-                print(wc_equipment[i][1])
-                if wc_equipment[i][1] == 0:
-                    self.gs_checkBox.setChecked(True)
-                elif wc_equipment[i][1] == 1:
-                    self.gs_checkBox.setChecked(False)
-                self.gs_ip_lineEdit.setText(wc_equipment[i][4])   
-                self.gs_port_lineEdit.setText(str(wc_equipment[i][5]))
-            elif wc_equipment[i][0] == '679':
-                #是否有效
-                print(wc_equipment[i][1])
-                if wc_equipment[i][1] == 0:
-                    self.wpc_checkBox.setChecked(True)
-                elif wc_equipment[i][1] == 1:
-                    self.wpc_checkBox.setChecked(False)
-                self.wpc_ip_lineEdit.setText(wc_equipment[i][4])   
-                self.wpc_port_lineEdit.setText(str(wc_equipment[i][5]))
-            elif wc_equipment[i][0] == '680':
-                #是否有效
-                print(wc_equipment[i][1])
-                if wc_equipment[i][1] == 0:
-                    self.doorin_checkBox.setChecked(True)
-                elif wc_equipment[i][1] == 1:
-                    self.doorin_checkBox.setChecked(False)
-                self.doorin_ip_lineEdit.setText(wc_equipment[i][4])   
-                self.doorin_port_lineEdit.setText(str(wc_equipment[i][5]))
-                
-            elif wc_equipment[i][0] == '681':
-                #是否有效
-                print(wc_equipment[i][1])
-                if wc_equipment[i][1] == 0:
-                    self.doorout_checkBox.setChecked(True)
-                elif wc_equipment[i][1] == 1:
-                    self.doorout_checkBox.setChecked(False)
-                self.doorout_ip_lineEdit.setText(wc_equipment[i][4])   
-                self.doorout_port_lineEdit.setText(str(wc_equipment[i][5]))
-            elif wc_equipment[i][0] == '682':
-                #是否有效
-                print(wc_equipment[i][1])
-                if wc_equipment[i][1] == 0:
-                    self.gateout_checkBox.setChecked(True)
-                elif wc_equipment[i][1] == 1:
-                    self.gateout_checkBox.setChecked(False)
-                self.gateout_ip_lineEdit.setText(wc_equipment[i][4])   
-                self.gateout_port_lineEdit.setText(str(wc_equipment[i][5]))
-                
-                
-                
-        self.msg_label.setText('提示信息：读取配置成功')
+        if wc_equipment != None:
+            self.ssh_port_lineEdit.setText(wc_equipment[0][2]) 
+            for i in range(10):
+                #闸门LED
+                if wc_equipment[i][0] == '122':
+                    #是否有效
+                    if wc_equipment[i][1] == 0:
+                        self.doorled_checkBox.setChecked(True)
+                    elif wc_equipment[i][1] == 1:
+                        self.doorled_checkBox.setChecked(False)
+                    self.doorled_ip_lineEdit.setText(wc_equipment[i][4])   
+                    self.doorled_port_lineEdit.setText(str(wc_equipment[i][5]))
+                elif wc_equipment[i][0] == '123':
+                    #是否有效
+                    if wc_equipment[i][1] == 0:
+                        self.washing_checkBox.setChecked(True)
+                    elif wc_equipment[i][1] == 1:
+                        self.washing_checkBox.setChecked(False)
+                    self.washing_ip_lineEdit.setText(wc_equipment[i][4])   
+                    self.washing_port_lineEdit.setText(str(wc_equipment[i][5]))
+                elif wc_equipment[i][0] == '234':
+                    #是否有效
+                    if wc_equipment[i][1] == 0:
+                        self.gatein_checkBox.setChecked(True)
+                    elif wc_equipment[i][1] == 1:
+                        self.gatein_checkBox.setChecked(False)
+                    self.gatein_ip_lineEdit.setText(wc_equipment[i][4])   
+                    self.gatein_port_lineEdit.setText(str(wc_equipment[i][5]))
+                elif wc_equipment[i][0] == '345':
+                    #是否有效
+                    if wc_equipment[i][1] == 0:
+                        self.camerazs_checkBox.setChecked(True)
+                    elif wc_equipment[i][1] == 1:
+                        self.camerazs_checkBox.setChecked(False)
+                    self.camerazs_ip_lineEdit.setText(wc_equipment[i][4])   
+                    self.camerazs_port_lineEdit.setText(str(wc_equipment[i][5]))
+                elif wc_equipment[i][0] == '456':
+                    #是否有效
+                    if wc_equipment[i][1] == 0:
+                        self.cameraled_checkBox.setChecked(True)
+                    elif wc_equipment[i][1] == 1:
+                        self.cameraled_checkBox.setChecked(False)
+                    self.cameraled_ip_lineEdit.setText(wc_equipment[i][4])   
+                    self.cameraled_port_lineEdit.setText(str(wc_equipment[i][5]))
+                    
+                elif wc_equipment[i][0] == '678':
+                    #是否有效
+                    if wc_equipment[i][1] == 0:
+                        self.gs_checkBox.setChecked(True)
+                    elif wc_equipment[i][1] == 1:
+                        self.gs_checkBox.setChecked(False)
+                    self.gs_ip_lineEdit.setText(wc_equipment[i][4])   
+                    self.gs_port_lineEdit.setText(str(wc_equipment[i][5]))
+                elif wc_equipment[i][0] == '679':
+                    #是否有效
+                    if wc_equipment[i][1] == 0:
+                        self.wpc_checkBox.setChecked(True)
+                    elif wc_equipment[i][1] == 1:
+                        self.wpc_checkBox.setChecked(False)
+                    self.wpc_ip_lineEdit.setText(wc_equipment[i][4])   
+                    self.wpc_port_lineEdit.setText(str(wc_equipment[i][5]))
+                elif wc_equipment[i][0] == '680':
+                    #是否有效
+                    if wc_equipment[i][1] == 0:
+                        self.doorin_checkBox.setChecked(True)
+                    elif wc_equipment[i][1] == 1:
+                        self.doorin_checkBox.setChecked(False)
+                    self.doorin_ip_lineEdit.setText(wc_equipment[i][4])   
+                    self.doorin_port_lineEdit.setText(str(wc_equipment[i][5]))
+                    
+                elif wc_equipment[i][0] == '681':
+                    #是否有效
+                    if wc_equipment[i][1] == 0:
+                        self.doorout_checkBox.setChecked(True)
+                    elif wc_equipment[i][1] == 1:
+                        self.doorout_checkBox.setChecked(False)
+                    self.doorout_ip_lineEdit.setText(wc_equipment[i][4])   
+                    self.doorout_port_lineEdit.setText(str(wc_equipment[i][5]))
+                elif wc_equipment[i][0] == '682':
+                    #是否有效
+                    if wc_equipment[i][1] == 0:
+                        self.gateout_checkBox.setChecked(True)
+                    elif wc_equipment[i][1] == 1:
+                        self.gateout_checkBox.setChecked(False)
+                    self.gateout_ip_lineEdit.setText(wc_equipment[i][4])   
+                    self.gateout_port_lineEdit.setText(str(wc_equipment[i][5]))
+            self.msg_label.setText('提示信息：读取配置成功')
+        else:
+            self.msg_label.setText('提示信息：数据库连接失败')
         
     @pyqtSlot()
     def on_write_setting_pushButton_clicked(self):
@@ -246,24 +266,30 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         site_code = self.site_id_lineEdit.text()
         wash_type = self.wash_type_lineEdit.text()
         wash_mode = self.wash_mode_lineEdit.text()
-        wc_param=(province,city,site_code,wash_type,wash_mode)
         
         sshport = self.ssh_port_lineEdit.text()
         self.set_equipment("update wc_equipment set site_id='"+sshport+"';")
         self.set_equipment("update wc_equipment set site_code='"+site_code+"';")
-        print(wc_param)
-        for i in range(0,5):
-            if wc_param[i]=="washingYB":
-                self.set_wc_param(wc_param[i],i+1)
-                self.set_equipment("update wc_equipment set code='washingYB' where id ='123';")
-            else:
-                self.set_wc_param(wc_param[i],i+1)  
-                self.set_equipment("update wc_equipment set code='washingZM2' where id ='123';")
+        
+        self.set_wc_param(province,1)
+        self.set_wc_param(city,2)
+        self.set_wc_param(site_code,3)
+        self.set_wc_param(wash_type,4)
+        print("len washmode")
+        print(len(wash_mode))
+        print(wash_mode[0:26])
+        wash_mode = wash_mode[0:26]+"\r\n"
+        self.set_wc_param(wash_mode,5)
+
+        
+        if wash_type=="washingYB":
+            self.set_equipment("update wc_equipment set code='washingYB' where id ='123';")
+        else:
+            self.set_equipment("update wc_equipment set code='washingZM2' where id ='123';")
                  
         doorin_status=self.doorin_checkBox.isChecked()
         doorin_ip = self.doorin_ip_lineEdit.text()
         doorin_port= self.doorin_port_lineEdit.text()
-        
         if doorin_status == True:
             doorin_status = 0
         else:
@@ -274,7 +300,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         doorout_status = self.doorout_checkBox.isChecked()
         doorout_ip = self.doorout_ip_lineEdit.text()
         doorout_port= self.doorout_port_lineEdit.text()
-        
         if doorout_status == True:
             doorout_status = 0
         else:
@@ -355,14 +380,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         sql="update wc_equipment set status='"+str(wpc_status)+"',ip='"+wpc_ip+"',port='"+str(wpc_port)+"' where id ='679';"
         self.set_equipment(sql)
         
-        gateout_status = self.doorout_checkBox.isChecked()
-        gateout_ip = self.doorout_ip_lineEdit.text()
-        gateout_port= self.doorout_port_lineEdit.text()
-        if gateout_status == True:
-            gateout_status = 0
+        washing_status = self.washing_checkBox.isChecked()
+        washing_ip = self.washing_ip_lineEdit.text()
+        washing_port= self.washing_port_lineEdit.text()
+        if washing_status == True:
+            washing_status = 0
         else:
-            gateout_status = 1
-        sql="update wc_equipment set status='"+str(gateout_status)+"',ip='"+gateout_ip+"',port='"+str(gateout_port)+"' where id ='682';"
+            washing_status = 1
+        sql="update wc_equipment set status='"+str(washing_status)+"',ip='"+washing_ip+"',port='"+str(washing_port)+"' where id ='123';"
         self.set_equipment(sql)
         
         self.msg_label.setText('提示信息：保存配置成功')
